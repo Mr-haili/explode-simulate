@@ -11,6 +11,8 @@ export class ParticleLayouter {
   updateParticle(particle: Particle) {
     let {velocity, position, acceleration, age } = particle;
 
+    const dAcceleration = acceleration.normalize().multiply(0.2);
+    acceleration = acceleration.subtract(dAcceleration);// todo 写死的常量加速度会不断衰减
     velocity = velocity.add(acceleration);
     position = position.add(velocity);
     age += 1 // todo 这个应该是可以配置的

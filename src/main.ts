@@ -17,7 +17,7 @@ import {
 } from './image-src';
 
 async function go(): Promise<void> {
-  const { particles, width, height } = await imageDiscretizate(imageSrc, 65);
+  const { particles, width, height } = await imageDiscretizate(imageSrc, 40);
 
   const layouter = new ParticleLayouter();
   const render = new ParticleRender('#demo-quickStart');
@@ -38,8 +38,8 @@ async function go(): Promise<void> {
     const { position } = particle;
     const escapeDirection = position.subtract(pCenter);
 
-    // const acceleration = escapeDirection.multiply(0.05 * Math.random());
-    const velocity = escapeDirection.normalize().multiply(2);
+    const acceleration = escapeDirection.normalize().multiply(0.5 * Math.random());
+    // const velocity = escapeDirection.normalize().multiply(2);
 
     // 先让初始速度为0
     // const velocity = new PVector2(5 * Math.random(), 5 * Math.random());
@@ -47,7 +47,7 @@ async function go(): Promise<void> {
     // 给个总体偏移。。
     particle.position = position.add(offsetPVector);
 
-    Object.assign(particle, { velocity });
+    Object.assign(particle, { acceleration });
 
     particleSystem.emit(particle);
   }
@@ -57,7 +57,7 @@ async function go(): Promise<void> {
   particleSystem.initRun();
 
   let intervalId = setInterval(() => {
-    if(total >= 1000) {
+    if(total >= 10000) {
       clearInterval(intervalId);
       return;
     }

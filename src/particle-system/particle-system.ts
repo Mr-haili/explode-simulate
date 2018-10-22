@@ -6,9 +6,6 @@ import {
 import {
   ParticleRecord
 } from './types';
-import {
-  Sprite
-} from 'spritejs';
 
 /**
  * 布局系统，更新计算每个particle的状态
