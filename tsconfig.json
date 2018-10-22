@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    // "noImplicitAny": true,
+    "sourceMap": true,
+    "declaration": true,
+    "target": "es5",
+    "lib": [ "dom", "es6", "es2017" ],
+    "baseUrl": "./src",
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts"
+  ],
+  "filesGlob": [
+    "**/*.ts"
+  ]
+}
