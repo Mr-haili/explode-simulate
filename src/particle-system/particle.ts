@@ -17,8 +17,4 @@ export class Particle {
     this.age = 0;
     this.isDead = false;
   }
-
-  static zero() {
-
-  }
 }

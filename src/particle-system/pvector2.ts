@@ -1,3 +1,8 @@
+
+function numTrim(x: number): number {
+  return Number(x.toPrecision(3))
+}
+
 /**
  * 二维空间上的向量
  */
@@ -11,6 +16,11 @@ export class PVector2 {
 
   clone(): PVector2 {
     return new PVector2(this.x, this.y);
+  }
+
+  equal(p: PVector2): boolean {
+    let { x, y } = this;
+    return numTrim(x) === numTrim(p.x) && numTrim(y) === numTrim(p.y);
   }
 
   add(p: PVector2): PVector2 {
@@ -42,12 +52,24 @@ export class PVector2 {
 
   normalize(): PVector2 {
     const { x, y } = this;
-    const len = Math.sqrt(x * x + y * y);
+    const len = this.len();
+    if(0 === len) return this; // 0向量返回自身
     return new PVector2(x / len, y / len);
+  }
+
+  // 向量长度
+  len(): number {
+    const { x, y } = this;
+    return Math.sqrt(x * x + y * y);
   }
 
   zero(): PVector2 {
     return PVector2.zero;
+  }
+
+  isZero(): boolean {
+    const { x, y } = this;
+    return x === 0 && y === 0;
   }
 
   toArray(): [number, number] {

@@ -5,12 +5,14 @@ import {
   Particle,
 } from './particle';
 import {
-  ParticleLayouter,
   ParticleSystem
 } from './particle-system';
 import {
   ParticleRender
 } from './particle-render';
+import {
+  ParticleLayouter
+} from './particle-layouter';
 
 export {
   Particle,

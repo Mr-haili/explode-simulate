@@ -29,8 +29,8 @@ async function initSystem(): Promise<ParticleSystem> {
   /**
    * 令粒子坐标为Vp，爆炸中心点坐标为Vc，
    * 那么获得中心点指向粒子的方向向量为V = Vp - Vc
-   * 粒子的速度和加速度的方向应该和V是保持一直的
-   * 
+   * 粒子的速度和加速度的方向应该和V是保持一致的
+   *
    */
   const pCenter = new PVector2(width / 2, height / 2);
   const offsetPVector = new PVector2(300, 300);
@@ -38,7 +38,7 @@ async function initSystem(): Promise<ParticleSystem> {
     const { position } = particle;
     const escapeDirection = position.subtract(pCenter);
 
-    const acceleration = escapeDirection.normalize().multiply(0.5 * Math.random());
+    const acceleration = escapeDirection.normalize().multiply(10 * Math.random());
 
     // 给个总体偏移。。
     particle.position = position.add(offsetPVector);
@@ -50,13 +50,16 @@ async function initSystem(): Promise<ParticleSystem> {
   return particleSystem;
 }
 
-function play(draw: Function): void {
-  var fps = 30;
-  var now;
-  var then = Date.now();
-  var interval = 1000/fps;
-  var delta;
+function play(draw: Function): void {  
+  const MAX_TIME = 3000;
+  let fps = 30,
+      now,
+      then = Date.now(),
+      interval = 1000/fps,
+      delta,
+      total = 0;
   function tick() {
+    if(total > MAX_TIME) return;
     requestAnimationFrame(tick);
     now = Date.now();
     delta = now - then;
@@ -65,6 +68,7 @@ function play(draw: Function): void {
       then = now - (delta % interval);
       draw(); // ... Code for Drawing the Frame ...
     }
+    total += interval;
   }
   tick();
 }

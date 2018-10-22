@@ -11,13 +11,23 @@ export class ParticleLayouter {
   updateParticle(particle: Particle) {
     let {velocity, position, acceleration, age } = particle;
 
-    const dAcceleration = acceleration.normalize().multiply(0.2);
-    acceleration = acceleration.subtract(dAcceleration);// todo 写死的常量加速度会不断衰减
-    velocity = velocity.add(acceleration);
-    position = position.add(velocity);
+    const vLen = velocity.len();
+
+    // 阻力正比于速度的平方 kv^2
+    const dAcceleration = velocity.normalize().multiply(vLen * vLen * 0.002);
+    acceleration = acceleration.subtract(dAcceleration); // todo 写死的常量，加速度会不断衰减
+
+    const newVelocity = velocity.add(acceleration);
+
+    if(!(velocity.isZero() || newVelocity.normalize().equal(velocity.normalize()))) {
+      particle.isDead = true;
+      return;
+    }
+    position = position.add(newVelocity);
     age += 1 // todo 这个应该是可以配置的
 
-    Object.assign(particle, { velocity, position, acceleration, age});
+    // 注意更新的速度需要时更新后的
+    Object.assign(particle, { velocity: newVelocity, position, acceleration, age});
   }
 
   // 更新所有粒子位置
