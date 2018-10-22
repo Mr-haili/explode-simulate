@@ -16,15 +16,11 @@ import {
 export class ParticleLayouter {
   // 跟新当前粒子的加速度，速度，位置，这个可以抽象出一个策略系统？
   updateParticle(particle: Particle): void {
-    console.log('@@@')
-
     let {velocity, position, acceleration, age } = particle;
 
     velocity = velocity.add(acceleration);
     position = position.add(velocity);
     age += 1 // todo 这个应该是可以配置的
-
-    console.log('!!!', position);
 
     Object.assign(particle, { velocity, position, acceleration, age});
   }
@@ -46,27 +42,27 @@ export class ParticleSystem {
   }
 
   // 这里我们可以抽象出一个发射器，用来负责粒子的初始化
-  emit(
-    position: PVector2,
-    size: PVector2,
-    acceleration: PVector2,
-    velocity: PVector2
-  ): void {
-    const particle = new Particle(
-      position,
-      size,
-      acceleration,
-      velocity
-    );
+  emit(particle: Particle): void {
     this._particleRecords.push({ particle, sprite: null });
+  }
+
+  private _initRun(): void {
+    
   }
 
   // 布局渲染
   run(): void {
     const records = this._particleRecords;
+
+    console.log('---开始布局阶段---');
     this._layouter.update(this._particleRecords.map(r => r.particle));
+    console.log('---布局阶段结束---');
+
     // this._removeDeadRecords();
+
+    console.log('---开始绘制阶段---');
     this._render.draw(records);
+    console.log('---绘制阶段结束---\n');
   }
 
   // 移除已经死亡的粒子

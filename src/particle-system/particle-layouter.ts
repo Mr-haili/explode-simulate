@@ -1,7 +1,6 @@
 import {
   PVector2,
-  Particle,
-  
+  Particle
 } from './'
 
 /**
@@ -21,6 +20,10 @@ export class ParticleLayouter {
 
   // 更新所有粒子位置
   update(particles: ReadonlyArray<Particle>): void {
-    particles.forEach(particle => this.updateParticle(particle));
+    console.log('---开始布局---');
+    for(let particle of particles) {
+      this.updateParticle(particle);
+    }
+    console.log('---布局完成---');
   }
 }

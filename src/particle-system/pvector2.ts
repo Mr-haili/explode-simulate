@@ -7,6 +7,8 @@ export class PVector2 {
     readonly y: number
   ) { }
 
+  static readonly zero = new PVector2(0, 0);
+
   clone(): PVector2 {
     return new PVector2(this.x, this.y);
   }
@@ -36,5 +38,13 @@ export class PVector2 {
 
   negate(): PVector2 {
     return new PVector2(-this.x, -this.y);
+  }
+
+  zero(): PVector2 {
+    return PVector2.zero;
+  }
+
+  toArray(): [number, number] {
+    return [this.x, this.y];
   }
 }
