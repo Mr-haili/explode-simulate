@@ -12,6 +12,3 @@ export function chunk<T>(arr: Array<T>, len: number): Array<Array<T>> {
   }
   return chunks;
 }
-
-const a = [1,2,3,4,5,6,7];
-console.log('----', chunk(a, 2));

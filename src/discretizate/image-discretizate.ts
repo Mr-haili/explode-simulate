@@ -13,10 +13,10 @@ import { chunk } from 'utils';
 const canvas = document.createElement('canvas');
 const canvasStyle = canvas.style;
 Object.assign(canvasStyle, {
-  // position: 'absolute',
-  // left: '-1000px',
-  // top: '-1000px',
-  // 'z-index': -1000
+  position: 'absolute',
+  left: '-1000px',
+  top: '-1000px',
+  'z-index': -1000
 });
 document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
