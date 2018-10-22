@@ -51,7 +51,7 @@ async function initSystem(): Promise<ParticleSystem> {
 }
 
 function play(draw: Function): void {  
-  const MAX_TIME = 3000;
+  const MAX_TIME = 10000;
   let fps = 30,
       now,
       then = Date.now(),
