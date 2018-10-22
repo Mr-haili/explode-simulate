@@ -38,11 +38,8 @@ async function go(): Promise<void> {
     const { position } = particle;
     const escapeDirection = position.subtract(pCenter);
 
-    console.log(escapeDirection);
-
     // const acceleration = escapeDirection.multiply(0.05 * Math.random());
-
-    const velocity = escapeDirection.multiply(0.02);
+    const velocity = escapeDirection.normalize().multiply(2);
 
     // 先让初始速度为0
     // const velocity = new PVector2(5 * Math.random(), 5 * Math.random());
@@ -54,6 +51,7 @@ async function go(): Promise<void> {
 
     particleSystem.emit(particle);
   }
+
   let total = 0, gap = 16.6;
 
   particleSystem.initRun();

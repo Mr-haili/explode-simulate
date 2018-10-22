@@ -24,7 +24,7 @@ export class PVector2 {
   }
 
   multiply(f: number): PVector2 {
-    return new PVector2(this.x * f, this.x * f);
+    return new PVector2(this.x * f, this.y * f);
   }
 
   divide(f: number): PVector2 {
@@ -38,6 +38,12 @@ export class PVector2 {
 
   negate(): PVector2 {
     return new PVector2(-this.x, -this.y);
+  }
+
+  normalize(): PVector2 {
+    const { x, y } = this;
+    const len = Math.sqrt(x * x + y * y);
+    return new PVector2(x / len, y / len);
   }
 
   zero(): PVector2 {
