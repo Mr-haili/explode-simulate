@@ -17,7 +17,7 @@ import {
 } from './image-src';
 
 async function go(): Promise<void> {
-  const { particles, width, height } = await imageDiscretizate(imageSrc, 30);
+  const { particles, width, height } = await imageDiscretizate(imageSrc, 65);
 
   const layouter = new ParticleLayouter();
   const render = new ParticleRender('#demo-quickStart');
@@ -26,28 +26,43 @@ async function go(): Promise<void> {
     render
   );
 
-  console.log('粒子数量：', particles.length);
-  // if(particles.length > 10000) return;
-
+  /**
+   * 令粒子坐标为Vp，爆炸中心点坐标为Vc，
+   * 那么获得中心点指向粒子的方向向量为V = Vp - Vc
+   * 粒子的速度和加速度的方向应该和V是保持一直的
+   * 
+   */
+  const pCenter = new PVector2(width / 2, height / 2);
+  const offsetPVector = new PVector2(300, 300);
   for(let particle of particles) {
-    const acceleration = new PVector2(2 * Math.random(), 2 * Math.random());
-    const velocity = new PVector2(5 * Math.random(), 5 * Math.random());
+    const { position } = particle;
+    const escapeDirection = position.subtract(pCenter);
 
-    Object.assign(particle, { acceleration, velocity });
+    console.log(escapeDirection);
+
+    // const acceleration = escapeDirection.multiply(0.05 * Math.random());
+
+    const velocity = escapeDirection.multiply(0.02);
+
+    // 先让初始速度为0
+    // const velocity = new PVector2(5 * Math.random(), 5 * Math.random());
+
+    // 给个总体偏移。。
+    particle.position = position.add(offsetPVector);
+
+    Object.assign(particle, { velocity });
 
     particleSystem.emit(particle);
   }
+  let total = 0, gap = 16.6;
 
-  console.log('!!!---初始化完成---');
+  particleSystem.initRun();
 
-  let total = 0;
-  let gap = 16.6;
   let intervalId = setInterval(() => {
-    if(total >= 16.6) {
+    if(total >= 1000) {
       clearInterval(intervalId);
       return;
     }
-    console.log('----一轮------');
     particleSystem.run();
     total += gap;
   }, gap);
@@ -55,3 +70,4 @@ async function go(): Promise<void> {
 
 console.log('---- lets rock ----');
 go();
+

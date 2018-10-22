@@ -1,4 +1,3 @@
-import * as _ from './utils';
 import { PVector2 } from './pvector2';
 import { Color } from 'discretizate';
 

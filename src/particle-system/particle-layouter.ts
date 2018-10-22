@@ -20,10 +20,8 @@ export class ParticleLayouter {
 
   // 更新所有粒子位置
   update(particles: ReadonlyArray<Particle>): void {
-    console.log('---开始布局---');
     for(let particle of particles) {
       this.updateParticle(particle);
     }
-    console.log('---布局完成---');
   }
 }

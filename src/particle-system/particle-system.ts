@@ -32,47 +32,33 @@ export class ParticleLayouter {
 }
 
 export class ParticleSystem {
-  private _particleRecords: ParticleRecord[];
+  private _particles: Particle[];
 
   constructor(
     private _layouter: ParticleLayouter,
     private _render: ParticleRender
   ) {
-    this._particleRecords = [];
+    this._particles = [];
   }
 
   // 这里我们可以抽象出一个发射器，用来负责粒子的初始化
   emit(particle: Particle): void {
-    this._particleRecords.push({ particle, sprite: null });
+    this._particles.push(particle);
   }
 
-  private _initRun(): void {
-    
+  initRun(): void {
+    this._render.draw(this._particles);
   }
 
   // 布局渲染
   run(): void {
-    const records = this._particleRecords;
-
-    console.log('---开始布局阶段---');
-    this._layouter.update(this._particleRecords.map(r => r.particle));
-    console.log('---布局阶段结束---');
-
+    this._layouter.update(this._particles);
     // this._removeDeadRecords();
-
-    console.log('---开始绘制阶段---');
-    this._render.draw(records);
-    console.log('---绘制阶段结束---\n');
+    this._render.draw(this._particles);
   }
 
   // 移除已经死亡的粒子
   private _removeDeadRecords(): void {
-    const records = this._particleRecords;
-    records.forEach(record => {
-      if(!record.particle.isDead) return;
-      record.sprite.remove(); // 移除精灵
-      record.sprite = null;
-    })
-    this._particleRecords = records.filter(record => record.particle.isDead);
+    this._particles.filter(particle => particle.isDead);
   }
 }
