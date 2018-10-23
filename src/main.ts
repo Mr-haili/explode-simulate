@@ -17,7 +17,7 @@ import {
 } from './image-src';
 
 async function initSystem(): Promise<ParticleSystem> {
-  const { particles, width, height } = await imageDiscretizate(imageSrc, 40);
+  const { particles, width, height } = await imageDiscretizate(imageSrc, 70);
 
   const layouter = new ParticleLayouter();
   const render = new ParticleRender('#demo-quickStart');

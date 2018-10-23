@@ -16,10 +16,12 @@ export class ParticleLayouter {
     // 阻力正比于速度的平方 av^2 bv^3;
     const vPVector = velocity.normalize(); // 速度的方向向量
     const dAcceleration =
-    vPVector
-      .multiply(vLen * vLen * 0.002)
-      .add(vPVector.multiply(vLen * vLen * vLen * 0.00001));
-    acceleration = acceleration.subtract(dAcceleration); // todo 写死的常量，加速度会不断衰减
+    PVector2.zero
+      .add(vPVector.multiply(vLen * 0.001)) // todo 写死的常量
+      .add(vPVector.multiply(vLen * vLen * 0.00005))
+      .add(vPVector.multiply(vLen * vLen * vLen * 0.00005));
+
+      acceleration = acceleration.subtract(dAcceleration);
 
     const newVelocity = velocity.add(acceleration);
 
